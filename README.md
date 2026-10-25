@@ -1,23 +1,79 @@
 <p align="center">
-  <img src="docs/assets/mark.svg" width="58" alt="ContextDrop mark" />
+  <img src="docs/assets/mark.svg" width="64" alt="ContextDrop" />
 </p>
 
 <h1 align="center">ContextDrop</h1>
 
-<p align="center"><strong>Deterministic context compression that keeps the diagnostic evidence.</strong></p>
-
 <p align="center">
-  Local-first Rust engine · CLI · stdio MCP · loopback API · React dashboard<br />
-  No model calls · No telemetry · Apache-2.0 · v0.1.0 (pre-1.0)
+  <strong>Deterministic context compression for AI coding agents.</strong><br />
+  Drop the noise. Keep the evidence.
 </p>
 
-ContextDrop removes repetitive build output, passing tests, progress bars, duplicate JSON records, and normalized log noise before context reaches an AI coding agent. Unlike model-based compressors, it uses a fixed rule set, protects diagnostic evidence, validates the result, and returns the original unchanged when a safe reduction is not possible.
+<p align="center">
+  <sub>Local-first Rust engine · CLI · stdio MCP · loopback API · React dashboard</sub>
+</p>
 
-![ContextDrop Workspace showing a Rust compiler log compressed from 5.7 KiB to 3.9 KiB with 10 of 10 protected occurrences retained](docs/assets/workspace.png)
+<p align="center">
+  <a href="https://github.com/CyberBoyNitin/ContextDrop/actions/workflows/ci.yml"><img src="https://github.com/CyberBoyNitin/ContextDrop/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://github.com/CyberBoyNitin/ContextDrop/releases"><img src="https://img.shields.io/github/v/release/CyberBoyNitin/ContextDrop?style=flat-square&amp;label=release" alt="Latest release" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/CyberBoyNitin/ContextDrop?style=flat-square" alt="Apache-2.0" /></a>
+  <a href="https://www.rust-lang.org"><img src="https://img.shields.io/badge/rust-1.85%2B-orange?style=flat-square&amp;logo=rust&amp;logoColor=white" alt="Rust 1.85+" /></a>
+  <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-stdio-6f42c1?style=flat-square" alt="MCP stdio server" /></a>
+  <img src="https://img.shields.io/badge/telemetry-none-brightgreen?style=flat-square" alt="No telemetry" />
+</p>
 
-## Why it exists
+<p align="center">
+  <a href="#install"><strong>Install</strong></a> ·
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#how-it-works">How it works</a> ·
+  <a href="#benchmarks">Benchmarks</a> ·
+  <a href="#documentation">Documentation</a>
+</p>
 
-Agent context fills with repetition: hundreds of `Compiling …` lines before one type error, 143 passing tests before one failed assertion, identical health-check logs around a single 500. Sending all of it wastes tokens and attention. Filtering it with ad-hoc scripts often removes the line that explains the failure.
+---
+
+ContextDrop compresses build logs, test output, structured logs, and JSON before they reach an AI coding agent. It removes repetition and noise while protecting the errors, stack traces, and assertions needed to debug — locally, deterministically, and without a model call.
+
+Use it as a CLI, a stdio MCP server, a loopback API, or a local dashboard. Every run produces a report covering what was removed, why, and what survived.
+
+<p align="center">
+  <img src="docs/assets/workspace.png" alt="ContextDrop Workspace showing a Rust compiler log compressed from 5.7 KiB to 3.9 KiB with all 10 protected occurrences retained" />
+  <br />
+  <sub>Workspace: a 5.7 KiB Rust compiler log compressed to 3.9 KiB, with all 10 protected occurrences retained.</sub>
+</p>
+
+| Principle | What it means |
+| --- | --- |
+| **Deterministic** | A fixed rule set, not a model. The same input and options produce the same compressed text and decisions. |
+| **Evidence-preserving** | Errors, failures, stack frames, and assertions are protected by default. Omissions are counted and reported. |
+| **Local-first** | CLI, stdio MCP, and loopback dashboard. No telemetry or analytics. |
+| **Auditable** | Byte and token metrics, diffs, preservation checks, and machine-readable reports. |
+
+<details>
+<summary><strong>Contents</strong></summary>
+
+- [Why ContextDrop](#why-contextdrop)
+- [Install](#install)
+- [Quick start](#quick-start)
+- [How it works](#how-it-works)
+- [Strategies](#strategies)
+- [Evidence protection](#evidence-protection)
+- [Dashboard](#dashboard)
+- [Benchmarks](#benchmarks)
+- [Security and privacy](#security-and-privacy)
+- [Build from source](#build-from-source)
+- [Documentation](#documentation)
+- [How ContextDrop compares](#how-contextdrop-compares)
+- [Limitations](#limitations)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+
+</details>
+
+## Why ContextDrop
+
+Agent context fills with repetition: hundreds of `Compiling …` lines before one type error, 143 passing tests before one failed assertion, identical health-check logs around a single 500. Sending all of it wastes tokens and attention. Filtering it with an ad-hoc script often removes the line that explains the failure.
 
 ContextDrop is built around three constraints:
 
@@ -25,184 +81,91 @@ ContextDrop is built around three constraints:
 2. **The result must be explainable.** Every run reports the strategy, classification, omissions, metrics, tokenizer, validation checks, and warnings.
 3. **Safety beats savings.** If validation fails or the candidate is not smaller, ContextDrop returns the input unchanged. Savings are measured, never guaranteed.
 
-## What it does
-
-- **Three deterministic strategies** with increasing scope.
-- **Evidence protection** for error/failure markers, security warnings, failed assertions, traces, panic/backtrace frames, paths and line numbers, exit codes, commands, and build/test summaries.
-- **Adjacent-context retention** so an error keeps its caret, source excerpt, or surrounding explanation.
-- **Literal user patterns** for project-specific evidence. Patterns are substrings, never regex or code.
-- **Text and JSON processing**, including structural deduplication of large duplicate record arrays.
-- **Exact local tokenization** with `tiktoken-rs` (`o200k_base` default, `cl100k_base` optional), or a clearly labelled heuristic estimate.
-- **Byte, character, token, and omission metrics** with preservation checks and explicit fallback reasons.
-- **CLI workflows** for files and stdin, text or JSON output, unified diffs, and benchmark evidence assertions.
-- **Native stdio MCP** so agents can compress pasted text or read and compress an explicit log file without first loading the raw file.
-- **A real local dashboard** with Workspace, Benchmark Lab, Rules, and Settings. It calls the same engine; it does not display fabricated data.
-- **A loopback-only API** with strict Host/Origin checks and no request-content logging.
-
-### Strategies
-
-| Strategy | What it removes | Intended use |
-| --- | --- | --- |
-| **Conservative** | Only consecutive exact repeated lines; for JSON, lexical whitespace | Maximum evidence safety, first pass |
-| **Balanced** | Conservative plus contiguous passing-test runs, progress updates, and duplicate records in qualifying JSON arrays | Default for build/test/log context |
-| **Aggressive** | Balanced plus global exact duplicate lines and normalized structured-log grouping | Maximum reduction; review the diff |
-
-Protection is independent of strategy. A protected line and its adjacent context are never eligible for omission. JSON structural deduplication inserts a `$contextdrop` marker and emits a schema-change warning; do not use it where exact JSON shape is required.
-
 ## Install
 
-### One-line install (recommended)
-
-Windows PowerShell:
+**Windows (PowerShell)**
 
 ```powershell
 irm https://github.com/CyberBoyNitin/ContextDrop/releases/latest/download/install.ps1 | iex
 ```
 
-macOS or Linux:
+**macOS / Linux**
 
 ```bash
 curl -fsSL https://github.com/CyberBoyNitin/ContextDrop/releases/latest/download/install.sh | bash
 ```
 
-The installer downloads the release for your platform, verifies its SHA-256 checksum, installs the `contextdrop` CLI and `contextdrop-mcp` server into a user-local directory, and registers the MCP server with each supported client it detects:
+The installer downloads the release for your platform, verifies its published SHA-256 checksum, installs the `contextdrop` CLI and `contextdrop-mcp` server into a user-local directory, and registers the MCP server with each supported client it detects:
 
 - OpenCode
 - Claude Code
 - Claude Desktop
 - Cursor
 
-Restart the client, then ask it to compress a log. For example:
+Windows installs to `%LOCALAPPDATA%\ContextDrop\bin`; macOS and Linux install to `~/.local/bin` and print the PATH line if needed. No Rust or Node installation is required.
 
-> Use contextdrop's `compress_context_file` tool on `C:\logs\build.log`, then explain the failure.
+Restart the client, then ask it to compress a log:
 
-No Rust or Node installation is required. To skip client registration, pin a version, choose an install directory, or configure only one client, see [Install options](docs/INSTALL.md). Release assets and `.sha256` files are also on the [Releases](https://github.com/CyberBoyNitin/ContextDrop/releases) page.
+> Use ContextDrop's `compress_context_file` tool on `./logs/build.log`, then explain the failure.
 
-The dashboard is not included in the release archives yet; build it from source with the steps below.
+| Platform | Architectures |
+| --- | --- |
+| Windows | x64 |
+| Linux | x64, arm64 |
+| macOS | Apple Silicon, Intel |
 
-## Build from source
+Prebuilt binaries cover the platforms above; other targets can build from source. To pin a version, choose an install directory, skip client registration, or configure a mirror, see [Install options](docs/INSTALL.md).
 
-### Requirements
+Release installs were verified on Windows 11 and Linux (WSL), including checksum verification and registration with OpenCode, Claude Code, Claude Desktop, and Cursor. Deliberately corrupted archives are rejected.
 
-- Rust stable (workspace `rust-version = 1.85`; tested with 1.98)
-- Node.js 20+ and npm for the optional dashboard (tested with Node 24)
-- Windows, macOS, or Linux
+> [!NOTE]
+> Release archives currently ship the CLI and MCP server. The dashboard is source-built — see [Build from source](#build-from-source).
 
-### Build
+## Quick start
 
-From this repository checkout:
+### Use with an AI agent (MCP)
 
-```bash
-cargo build --release --workspace
-```
+1. Run the installer.
+2. Restart your AI client.
+3. Ask it to compress a file or pasted text. The server exposes four tools:
 
-On Unix, use `./target/release/contextdrop`; on Windows, use `target\release\contextdrop.exe`. The commands below use the Unix path.
+| Tool | Purpose |
+| --- | --- |
+| `compress_context` | Compress text already in the conversation. |
+| `compress_context_file` | Read and compress an explicit local file. |
+| `inspect_protection` | Show which lines would be protected and why. |
+| `list_protection_rules` | List the built-in evidence rules. |
 
-### Connect an MCP agent
+The MCP server is local stdio only: it opens no sockets, executes nothing, and reads only the path passed to `compress_context_file`. Client-specific setup is in [MCP setup](docs/MCP.md).
 
-If you used the one-line installer above, the server is already registered and
-you can skip this section. The steps here are for source builds and manual
-setups.
+Verified with OpenCode 2.0.27: all four tools appeared in Code Mode, and a real `compress_context_file` call reduced the Rust fixture from 5,841 to 3,955 bytes while retaining all 10 protected occurrences.
 
-The workspace builds `contextdrop-mcp`, a local stdio MCP server with no
-network listener and no command-execution tool:
-
-```bash
-cargo build --release -p contextdrop-mcp
-```
-
-For OpenCode V2, add it under `mcp.servers` in `opencode.jsonc`:
-
-```jsonc
-{
-  "$schema": "https://opencode.ai/config.json",
-  "mcp": {
-    "servers": {
-      "contextdrop": {
-        "type": "local",
-        "command": [
-          "C:/Users/you/Documents/ContextDrop/target/release/contextdrop-mcp.exe"
-        ]
-      }
-    }
-  }
-}
-```
-
-Or register it from the command line:
+### Use from the CLI
 
 ```bash
-opencode mcp add contextdrop --global -- /absolute/path/to/contextdrop-mcp
+# Balanced is the default
+contextdrop compress build.log
+
+# Read from stdin
+cat test-output.log | contextdrop compress --stdin --strategy conservative
+
+# Machine-readable metrics and report
+contextdrop compress build.log --strategy aggressive --format json > result.json
+
+# Write to a new file safely (existing files require --force)
+contextdrop compress build.log --output compressed.log
+
+# Keep project-specific evidence that must survive
+contextdrop compress incident.log --preserve "tenant_id=acme" --preserve "deploy-target-7"
+
+# Review a real unified diff
+contextdrop compare pytest-traceback.log
 ```
 
-The server exposes `compress_context`, `compress_context_file`,
-`inspect_protection`, and `list_protection_rules`. The file tool reads only the
-explicit path it is given; it never writes. Claude Code, Claude Desktop, Cursor,
-and generic stdio configurations are in [docs/MCP.md](docs/MCP.md).
+On Windows PowerShell, replace `cat` with `Get-Content`. The CLI writes processed text to stdout and diagnostics to stderr, so it composes safely in scripts. It refuses to overwrite an existing output file unless `--force` is passed. From a source build, use `./target/release/contextdrop` (`target\release\contextdrop.exe` on Windows); run `contextdrop --help` for the full reference.
 
-Verified on October 24, 2026 with OpenCode 2.0.27: `opencode mcp list` reported
-`contextdrop connected`, all four tools appeared in Code Mode, and a real
-`compress_context_file` call reduced `fixtures/rust-build-failure.log` from
-5,841 to 3,955 bytes, retained all 10 protected occurrences, and passed all
-three preservation checks.
-
-### Compress a file
-
-```bash
-./target/release/contextdrop compress fixtures/rust-build-failure.log --strategy balanced
-```
-
-Process stdin without executing it:
-
-```bash
-cat test-output.log | ./target/release/contextdrop compress --stdin --strategy conservative
-```
-
-Emit a machine-readable report:
-
-```bash
-./target/release/contextdrop compress build.log \
-  --strategy aggressive \
-  --format json > result.json
-```
-
-Write to a file safely:
-
-```bash
-./target/release/contextdrop compress build.log --output compressed.log
-# Refuses to overwrite an existing file; add --force only when intentional.
-```
-
-Add project-specific evidence that must survive:
-
-```bash
-./target/release/contextdrop compress incident.log \
-  --preserve "tenant_id=acme" \
-  --preserve "deploy-target-7"
-```
-
-Compare original and output:
-
-```bash
-./target/release/contextdrop compare pytest-traceback.log
-```
-
-### Run the dashboard
-
-Build the dashboard first, then start the loopback server from the repository root:
-
-```bash
-cd web
-npm ci
-npm run build
-cd ..
-
-cargo run -p contextdrop-server -- --bind 127.0.0.1:8787 --web-dir web/dist
-```
-
-Open <http://127.0.0.1:8787>. The server also exposes the local API at `/api/health`. It refuses non-loopback bind addresses.
-
-### CLI exit codes
+<details>
+<summary><strong>CLI exit codes</strong></summary>
 
 | Code | Meaning |
 | ---: | --- |
@@ -213,35 +176,111 @@ Open <http://127.0.0.1:8787>. The server also exposes the local API at `/api/hea
 | 4 | Input exceeded the configured size limit |
 | 5 | Invalid structured input or engine error |
 
-Use `contextdrop --help`, `contextdrop compress --help`, or `contextdrop benchmark --help` for all options.
+</details>
+
+## How it works
+
+```mermaid
+flowchart LR
+    A[Raw developer output] --> B[Classify]
+    B --> C[Protect evidence]
+    C --> D[Remove repetition]
+    D --> E[Validate]
+    E -->|safe and smaller| F[Compressed context + report]
+    E -->|unsafe, invalid, or not smaller| A
+```
+
+| Stage | What happens |
+| --- | --- |
+| **Classify** | Detects build logs, test output, terminal/progress output, structured logs, JSON, or plain text. |
+| **Protect** | Marks errors, failures, stack frames, paths with line numbers, exit codes, security findings, commands, summaries, and custom literals. Adjacent context is protected too. |
+| **Reduce** | Removes exact repetition, passing-test runs, progress updates, duplicate log records, and normalized noise according to the selected strategy. |
+| **Validate** | Confirms protected occurrences survived, structured output is valid, and the candidate is smaller. |
+| **Fallback** | Returns the original input unchanged when a safe reduction is not possible. |
+
+Every run produces a report with the strategy, classification, omission spans, byte and token metrics, tokenizer, preservation checks, and warnings. Tokenization is local and explicit: `o200k_base` by default, `cl100k_base` optional, or a clearly labelled heuristic estimate.
+
+| Surface | Use it for | Entry point |
+| --- | --- | --- |
+| **CLI** | One-off compression, scripts, CI | `contextdrop compress` |
+| **MCP** | Let an agent compress explicitly | Installer + restart your client |
+| **API** | Local integrations and the dashboard | `contextdrop-server` on loopback |
+| **Dashboard** | Inspect diffs, evidence, and benchmarks | Source build for now |
+
+Workspace layout: `contextdrop-core` is the engine; `contextdrop-cli`, `contextdrop-server`, and `contextdrop-mcp` are adapters over the same engine; `web/` is the React dashboard.
+
+## Strategies
+
+All strategies share the same protection layer. They differ only in how much repetition they remove.
+
+| Strategy | What it removes | Intended use |
+| --- | --- | --- |
+| **Conservative** | Consecutive exact repeated lines; lexical whitespace in JSON | Maximum evidence safety, first pass |
+| **Balanced** (default) | Conservative plus contiguous passing-test runs, progress updates, and duplicate records in qualifying JSON arrays | Default for build, test, and log context |
+| **Aggressive** | Balanced plus global exact duplicate lines and normalized structured-log grouping | Maximum reduction; review the diff |
+
+Protection is independent of strategy: a protected line and its adjacent context are never eligible for omission. JSON structural deduplication inserts a `$contextdrop` marker and emits a schema-change warning; do not use it where the exact JSON shape is required.
+
+## Evidence protection
+
+ContextDrop's first job is not compression; it is making compression safe to inspect.
+
+**Protected by default**
+
+- Compiler errors and warnings, including carets and source excerpts
+- Test failures, failed assertions, and build/test summaries
+- Panic messages, stack traces, and backtrace frames
+- Paths with line and column numbers, exit codes, and commands
+- Security scan findings and HTTP errors
+- User-specified literal patterns
+
+**Validated on every run**
+
+- Protected occurrences are counted in the input and output.
+- Preservation checks fail closed.
+- The result must be smaller; otherwise the original is returned.
+- JSON output must remain parseable.
+- Omission spans and counts are reported.
+
+<p align="center">
+  <img src="docs/assets/rules.png" alt="ContextDrop Rules view showing 10 protected occurrences across 130 lines and the rule that matched each one" />
+  <br />
+  <sub>Rules: the real protection map for the Rust compiler fixture — 10 protected occurrences across 130 lines, with the rule behind each match.</sub>
+</p>
+
+Literal patterns are case-insensitive substrings, never regex or executable code. Adjacent context is retained so an error keeps its caret, source excerpt, or surrounding explanation.
 
 ## Dashboard
 
-The dashboard has four functional surfaces:
+The dashboard is a local React interface over the same engine. It has four surfaces:
 
 - **Workspace** — load a fixture, local file, or pasted text; compress with any strategy; inspect Output, Diff, Evidence, and raw JSON; copy or download the result.
-- **Benchmark Lab** — run all three strategies against the twelve fixtures or custom input; inspect per-strategy bytes, tokens, omissions, timing, preservation, and evidence checks.
-- **Rules** — inspect the real protection map for a fixture, see why each line matched, and apply literal custom patterns.
+- **Benchmark Lab** — run all three strategies against the twelve fixtures or custom input; inspect bytes, tokens, omissions, timing, preservation, and evidence checks.
+- **Rules** — inspect the protection map for a fixture, see why each line matched, and apply literal custom patterns.
 - **Settings** — persist strategy, tokenizer, format, transform toggles, limits, custom patterns, and optional input-cost preferences locally.
 
-![Benchmark Lab showing Rust fixture results, 32.3% byte reduction, evidence 6/6, and preservation checks](docs/assets/benchmark.png)
+<p align="center">
+  <img src="docs/assets/benchmark.png" alt="ContextDrop Benchmark Lab showing the Rust compiler fixture, 32.3 percent byte reduction, and 6 of 6 evidence checks passing" />
+  <br />
+  <sub>Benchmark Lab: the Rust compiler fixture at 32.3% byte reduction, with evidence and preservation checks passing.</sub>
+</p>
 
-All API calls stay on the loopback origin. The page does not load third-party scripts, fonts, or analytics, and the server sends a restrictive Content Security Policy. See [Privacy](docs/PRIVACY.md) for the complete data-flow description.
+All API calls stay on the loopback origin. The page loads no third-party scripts, fonts, or analytics, and the server sends a restrictive Content Security Policy. See [Privacy](docs/PRIVACY.md) for the complete data flow. Start it with the [source-build steps](#build-from-source).
 
-## Benchmark results
+## Benchmarks
 
-The repository includes twelve deterministic synthetic fixtures and 56 required-evidence assertions per strategy. On October 23, 2026, all **168/168** evidence checks passed across 36 real compression runs.
+The repository includes twelve deterministic synthetic fixtures and 56 required-evidence assertions per strategy. On October 23, 2026, all **168/168** evidence checks passed across 36 compression runs.
 
 | Strategy | Output bytes | Byte reduction | Output tokens | Token reduction |
 | --- | ---: | ---: | ---: | ---: |
 | Original | 160,720 | — | 49,254 | — |
 | Conservative | 130,003 | 19.11% | 40,232 | 18.32% |
-| Balanced | 66,113 | 58.86% | 22,212 | 54.90% |
+| **Balanced** (default) | 66,113 | 58.86% | 22,212 | 54.90% |
 | Aggressive | 22,277 | 86.14% | 5,880 | 88.06% |
 
-Exact token counts use `o200k_base`. These are results for this synthetic corpus only, not a promise for arbitrary logs. Aggressive was slightly larger than Balanced on the Jest and Pytest fixtures because normalized grouping added markers; the engine does not automatically pick the smallest strategy for you. The dense-source control produced no reduction under any strategy.
+Exact token counts use `o200k_base`. These results describe this synthetic corpus, not arbitrary logs. Aggressive was slightly larger than Balanced on the Jest and Pytest fixtures because normalized grouping added markers; ContextDrop does not automatically choose the smallest strategy. The dense-source control produced no reduction under any strategy.
 
-Reproduce the benchmark:
+From a repository checkout, reproduce the benchmark with:
 
 ```bash
 cargo run --release -p contextdrop-cli -- benchmark fixtures \
@@ -250,20 +289,31 @@ cargo run --release -p contextdrop-cli -- benchmark fixtures \
   --format json > contextdrop-benchmark.json
 ```
 
-Read [Benchmark methodology and results](docs/BENCHMARK_METHODOLOGY.md) for the full per-fixture table, measurement definitions, and interpretation limits.
+Read [Benchmark methodology and results](docs/BENCHMARK_METHODOLOGY.md) for the per-fixture table, measurement definitions, and interpretation limits.
 
 ## Security and privacy
 
-- Compression core performs no filesystem, network, subprocess, or model I/O.
+ContextDrop is designed to be inspectable and boring: local processes, explicit inputs, no hidden network calls.
+
+**Data handling**
+
+- The compression core performs no filesystem, network, subprocess, or model I/O.
 - The MCP server is local stdio only: it opens no sockets, executes nothing, writes no files, and reads only the explicit path passed to `compress_context_file`.
-- The server binds only to loopback and rejects non-loopback bind addresses.
-- API requests require a loopback `Host`; present `Origin` headers must be loopback.
-- CORS is allowlisted, not `*`; POST bodies require JSON; responses are `no-store`.
-- Limits: 1,000,000 input bytes by default, 4 MiB HTTP body, four concurrent API requests, 20-second processing timeout; MCP calls accept at most 4,000,000 input bytes.
-- Input is never executed, and neither server logs nor persists request content.
+- Input is never executed. Neither server logs nor persists request content.
 - Dashboard input and results are not stored in browser storage; only preferences and custom patterns are.
 - No telemetry, analytics, remote fonts, or remote tokenizer calls.
+
+**Network and API**
+
+- The HTTP server binds only to loopback and rejects non-loopback bind addresses.
+- API requests require a loopback `Host`; present `Origin` headers must be loopback.
+- CORS is allowlisted, not `*`; POST bodies require JSON; responses are `no-store`.
+- Limits: 1,000,000 input bytes by default, 4 MiB HTTP body, four concurrent API requests, a 20-second processing timeout, and a 4,000,000-byte MCP input limit.
+
+**Files**
+
 - The CLI refuses to overwrite an existing output file without `--force`.
+- The MCP file tool has no path sandbox and runs with the user's filesystem permissions — only point it at files you intend to share with the agent.
 
 Verified on October 24, 2026:
 
@@ -272,9 +322,52 @@ cargo audit    0 vulnerabilities across 137 locked crate dependencies
 npm audit      0 vulnerabilities in the dashboard npm tree (163 packages)
 ```
 
+Release archives are built by GitHub Actions and verified by the installer's SHA-256 check. Binaries are not yet code-signed.
+
 Details: [Threat model](docs/THREAT_MODEL.md) · [Privacy](docs/PRIVACY.md) · [Security policy](SECURITY.md).
 
-## Testing
+## Build from source
+
+### Requirements
+
+- Rust 1.85+ (tested with 1.98)
+- Node.js 20+ for the optional dashboard (tested with 24)
+- Windows, macOS, or Linux
+
+```bash
+git clone https://github.com/CyberBoyNitin/ContextDrop.git
+cd ContextDrop
+cargo build --release --workspace
+```
+
+The build produces:
+
+- `target/release/contextdrop` — CLI
+- `target/release/contextdrop-mcp` — stdio MCP server
+
+On Windows, the same files end in `.exe`.
+
+### Run the dashboard
+
+```bash
+cd web
+npm ci
+npm run build
+cd ..
+cargo run -p contextdrop-server -- --bind 127.0.0.1:8787 --web-dir web/dist
+```
+
+Open <http://127.0.0.1:8787>. The server refuses non-loopback bind addresses.
+
+### Register the MCP server manually
+
+```bash
+opencode mcp add contextdrop --global -- /absolute/path/to/contextdrop-mcp
+```
+
+For OpenCode JSON, Claude Code, Claude Desktop, Cursor, and generic stdio clients, see [MCP setup](docs/MCP.md).
+
+### Tests
 
 ```bash
 cargo fmt --all -- --check
@@ -283,61 +376,60 @@ cargo test --workspace
 cd web && npm ci && npm run build
 ```
 
-Current verified result: **95 Rust tests pass** — 45 core unit tests, 3 property-based tests, 3 CLI unit tests, 10 CLI integration tests, 13 server tests, 17 MCP unit tests, and 4 spawned-process MCP stdio tests — plus the frontend type-check and production build. Clippy passes with warnings denied.
+The current suite has **95 Rust tests** — 45 core unit tests, 3 property-based tests, 3 CLI unit tests, 10 CLI integration tests, 13 server tests, 17 MCP unit tests, and 4 spawned-process MCP stdio tests — plus the frontend type-check and production build. CI runs the same checks.
 
-The test suite covers deterministic strategies, protected evidence, JSON validity, CRLF/trailing newline behavior, UTF-8 property tests, fallback behavior, file/stdin handling, overwrite protection, exit codes, API guards and limits, SPA routing, benchmark evidence failures, legacy and modern MCP handshakes, tool discovery, text/file compression, MCP size limits, and stdout purity.
+## Documentation
 
-## Repository structure
-
-```text
-crates/
-  contextdrop-core/       Pure engine, tokenizer, preservation, benchmark runner
-  contextdrop-cli/        clap CLI, safe file I/O, renderers, integration tests
-  contextdrop-server/     Loopback Axum API, embedded fixtures, dashboard host
-  contextdrop-mcp/        Local stdio MCP server, protocol and tool tests
-web/
-  src/                    React + TypeScript + Vite + Tailwind dashboard
-  public/                 Static assets
-fixtures/                 Twelve deterministic fixtures and manifest
-scripts/                  Fixture generator and one-line installers
-docs/                     Architecture, install, threat model, privacy, methodology, MCP, comparison
-```
-
-Architecture and data flow: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). MCP client setup:
-[docs/MCP.md](docs/MCP.md).
+| Document | What is inside |
+| --- | --- |
+| [Install options](docs/INSTALL.md) | One-line installers, flags, version pinning, updates, uninstall, troubleshooting |
+| [MCP setup](docs/MCP.md) | OpenCode, Claude Code, Claude Desktop, Cursor, and generic stdio configuration |
+| [Architecture](docs/ARCHITECTURE.md) | Crate boundaries, compression pipeline, data flow, invariants |
+| [Benchmark methodology](docs/BENCHMARK_METHODOLOGY.md) | Corpus, metrics, per-fixture results, interpretation limits |
+| [Threat model](docs/THREAT_MODEL.md) | Assets, trust boundaries, attack surface, mitigations |
+| [Privacy](docs/PRIVACY.md) | Data flows, storage, and network behavior |
+| [Competitive analysis](docs/COMPETITIVE_ANALYSIS.md) | Headroom, LLMLingua, provider compaction, and manual filtering |
+| [Contributing](CONTRIBUTING.md) | Development setup, tests, and pull-request expectations |
+| [Security policy](SECURITY.md) | Private vulnerability reporting |
+| [Changelog](CHANGELOG.md) | Release history |
 
 ## How ContextDrop compares
 
-ContextDrop is deliberately narrower than a compression proxy or an ML prompt compressor. It is for auditable, repeatable reduction of diagnostic context. It does not replace agent memory, prompt-cache management, or model-based prose compression.
+ContextDrop is deliberately narrower than a compression proxy or an ML prompt compressor. It is for auditable, repeatable reduction of diagnostic context, not agent memory, prompt-cache management, or prose compression.
 
-- **Headroom** is broader: local proxy, SDKs, MCP, agent wrapping, reversible compression, cross-agent memory, and ML/AST compressors. ContextDrop now ships a local stdio MCP server, but it has no transparent proxy, reversibility store, or agent wrapper. Headroom's telemetry beacon is on by default (opt-out). It is generally the better fit for live agent traffic that needs reversibility and breadth.
-- **LLMLingua** performs model-based prompt compression. It can reduce more prose, but its output is not a fixed evidence-preserving rule transformation.
-- **Provider-native compaction** is convenient but opaque and not locally reproducible.
-- **Manual filtering** is deterministic but has no standard evidence protection, validation, or fallback.
+- **Headroom** — broader local proxy, SDK, MCP, agent-memory, and reversible-compression platform. A better fit when you need transparent live traffic and reversibility.
+- **LLMLingua** — model-based prompt compression. It can reduce more prose, but its output is not a fixed, evidence-preserving rule transformation.
+- **Provider-native compaction** — convenient, but opaque and not locally reproducible.
+- **Manual filtering** — deterministic, but without standard evidence protection, validation, or fallback.
 
-The full capability comparison, sourced claims, and “when to choose what” guidance are in [docs/COMPETITIVE_ANALYSIS.md](docs/COMPETITIVE_ANALYSIS.md).
+See the [full capability comparison](docs/COMPETITIVE_ANALYSIS.md) for sourced claims and "when to choose what" guidance.
 
 ## Limitations
 
-- Protection is heuristic. It can over-protect repetition and can miss important lines in unusual formats or languages. Review the diff and add literal patterns.
-- No semantic equivalence, answer-quality, or provider-billing guarantee. Presence checks only prove that selected strings survived.
-- The benchmark corpus is synthetic and small; its percentages are not universal.
-- JSON structural deduplication changes document shape by adding `$contextdrop`. Avoid it for strict schemas.
-- Exact token counts are encoding-level counts that exclude chat framing, tool schemas, and provider overhead. MCP results also include a structured report, so reported savings are not total agent-context savings.
-- The local HTTP API has no authentication. Other local processes may reach it; do not bind it beyond loopback.
-- The MCP server is not a proxy or interceptor. The agent must call it explicitly. Its file tool has no sandbox or path allowlist and runs with the user's filesystem permissions. MCP clients may retain tool results under their own policies.
-- The project is pre-1.0. APIs and output schemas may change before 1.0.
+- **Protection is heuristic.** It can over-protect repetition and miss important lines in unusual formats or languages. Review the diff and add literal patterns.
+- **No semantic guarantee.** Preservation checks prove that selected strings survived, not that the answer will be correct or the bill lower.
+- **The benchmark is synthetic.** The percentages are not universal.
+- **JSON structural deduplication changes document shape.** It adds a `$contextdrop` marker; avoid it for strict schemas.
+- **Token counts are encoding-level.** They exclude chat framing, tool schemas, and provider overhead. MCP results also include a structured report, so reported savings are not total agent-context savings.
+- **Local surfaces are not sandboxed.** The HTTP API has no authentication; the MCP file tool runs with the user's filesystem permissions. Do not expose the API beyond loopback.
+- **Pre-1.0.** APIs and output schemas may change before 1.0.
 
-## Roadmap priorities
+## Roadmap
 
 1. **Agent capture beyond explicit tool calls** — optional proxy or hook workflows and per-project preservation profiles; the local stdio MCP server is shipped.
 2. **Broader evidence coverage and evaluation** — more real-world format fixtures, multilingual rules, and differential tests that measure whether important diagnostics survive.
-3. **Distribution and release confidence** — reproducible signed builds, package-manager distribution, and performance measurements in release mode.
+3. **Distribution and release confidence** — signed builds, package-manager distribution, and release-mode performance measurements.
 
 ## Contributing
 
-Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before contributing. Report security issues privately per [SECURITY.md](SECURITY.md), not in a public issue.
+Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) first. Report security issues privately per [SECURITY.md](SECURITY.md), not in a public issue.
 
 ## License
 
 Apache License 2.0. See [LICENSE](LICENSE).
+
+---
+
+<p align="center">
+  <sub>Built in Rust. Runs locally. Calls no models. Apache-2.0.</sub>
+</p>
