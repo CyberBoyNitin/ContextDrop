@@ -1,0 +1,130 @@
+$ cargo build --release
+   Compiling fixture-dependency-01 v0.1.1
+   Compiling fixture-dependency-02 v0.1.2
+   Compiling fixture-dependency-03 v0.1.3
+   Compiling fixture-dependency-04 v0.1.4
+   Compiling fixture-dependency-05 v0.1.5
+   Compiling fixture-dependency-06 v0.1.6
+   Compiling fixture-dependency-07 v0.1.7
+   Compiling fixture-dependency-08 v0.1.8
+   Compiling fixture-dependency-09 v0.1.9
+   Compiling fixture-dependency-10 v0.1.10
+   Compiling fixture-dependency-11 v0.1.11
+   Compiling fixture-dependency-12 v0.1.12
+   Compiling fixture-dependency-13 v0.1.13
+   Compiling fixture-dependency-14 v0.1.14
+   Compiling fixture-dependency-15 v0.1.15
+   Compiling fixture-dependency-16 v0.1.16
+   Compiling fixture-dependency-17 v0.1.17
+   Compiling fixture-dependency-18 v0.1.18
+   Compiling fixture-dependency-19 v0.1.19
+   Compiling fixture-dependency-20 v0.1.20
+   Compiling fixture-dependency-21 v0.1.21
+   Compiling fixture-dependency-22 v0.1.22
+   Compiling fixture-dependency-23 v0.1.23
+   Compiling fixture-dependency-24 v0.1.24
+   Compiling fixture-dependency-25 v0.1.25
+   Compiling fixture-dependency-26 v0.1.26
+   Compiling fixture-dependency-27 v0.1.27
+   Compiling fixture-dependency-28 v0.1.28
+   Compiling fixture-dependency-29 v0.1.29
+   Compiling fixture-dependency-30 v0.1.30
+   Compiling fixture-dependency-31 v0.1.31
+   Compiling fixture-dependency-32 v0.1.32
+   Compiling fixture-dependency-33 v0.1.33
+   Compiling fixture-dependency-34 v0.1.34
+   Compiling fixture-dependency-35 v0.1.35
+   Compiling fixture-dependency-36 v0.1.36
+   Compiling fixture-dependency-37 v0.1.37
+   Compiling fixture-dependency-38 v0.1.38
+   Compiling fixture-dependency-39 v0.1.39
+   Compiling fixture-dependency-40 v0.1.40
+   Compiling fixture-dependency-41 v0.1.41
+   Compiling fixture-dependency-42 v0.1.42
+   Compiling fixture-dependency-43 v0.1.43
+   Compiling fixture-dependency-44 v0.1.44
+   Compiling fixture-dependency-45 v0.1.45
+   Compiling fixture-dependency-46 v0.1.46
+   Compiling fixture-dependency-47 v0.1.47
+   Compiling fixture-dependency-48 v0.1.48
+   Compiling fixture-dependency-49 v0.1.49
+   Compiling fixture-dependency-50 v0.1.50
+   Compiling fixture-dependency-51 v0.1.51
+   Compiling fixture-dependency-52 v0.1.52
+   Compiling fixture-dependency-53 v0.1.53
+   Compiling fixture-dependency-54 v0.1.54
+   Compiling fixture-dependency-55 v0.1.55
+   Compiling fixture-dependency-56 v0.1.56
+   Compiling fixture-dependency-57 v0.1.57
+   Compiling fixture-dependency-58 v0.1.58
+   Compiling fixture-dependency-59 v0.1.59
+   Compiling fixture-dependency-60 v0.1.60
+   Compiling fixture-dependency-61 v0.1.61
+   Compiling fixture-dependency-62 v0.1.62
+   Compiling fixture-dependency-63 v0.1.63
+   Compiling fixture-dependency-64 v0.1.64
+   Compiling fixture-dependency-65 v0.1.65
+   Compiling fixture-dependency-66 v0.1.66
+   Compiling fixture-dependency-67 v0.1.67
+   Compiling fixture-dependency-68 v0.1.68
+   Compiling fixture-dependency-69 v0.1.69
+   Compiling fixture-dependency-70 v0.1.70
+   Compiling fixture-dependency-71 v0.1.71
+   Compiling fixture-dependency-72 v0.1.72
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+    Blocking waiting for file lock on build directory
+warning: unused variable: `retries`
+  --> crates/contextdrop-core/src/config.rs:42:9
+   |
+42 |     let retries = 3;
+   |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_retries`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+error[E0308]: mismatched types
+ --> crates/contextdrop-cli/src/main.rs:14:37
+   |
+14 |     let message: String = load_name();
+   |                  ------   ^^^^^^^^^^^ expected `String`, found `&str`
+   |                  |
+   |                  expected due to this
+
+error: aborting due to 1 previous error
+error: could not compile `contextdrop-cli` (bin "contextdrop") due to 1 previous error
+exit code: 101

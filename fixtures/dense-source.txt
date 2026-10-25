@@ -1,0 +1,138 @@
+pub struct ContextWindow {
+    field_001: ConfigValue1, // stable configuration member 1
+    field_002: ConfigValue2, // stable configuration member 2
+    field_003: ConfigValue3, // stable configuration member 3
+    field_004: ConfigValue4, // stable configuration member 4
+    field_005: ConfigValue5, // stable configuration member 5
+    field_006: ConfigValue6, // stable configuration member 6
+    field_007: ConfigValue7, // stable configuration member 7
+    field_008: ConfigValue8, // stable configuration member 8
+    field_009: ConfigValue9, // stable configuration member 9
+    field_010: ConfigValue10, // stable configuration member 10
+    field_011: ConfigValue11, // stable configuration member 11
+    field_012: ConfigValue12, // stable configuration member 12
+    field_013: ConfigValue13, // stable configuration member 13
+    field_014: ConfigValue14, // stable configuration member 14
+    field_015: ConfigValue15, // stable configuration member 15
+    field_016: ConfigValue16, // stable configuration member 16
+    field_017: ConfigValue17, // stable configuration member 17
+    field_018: ConfigValue18, // stable configuration member 18
+    field_019: ConfigValue19, // stable configuration member 19
+    field_020: ConfigValue20, // stable configuration member 20
+    field_021: ConfigValue21, // stable configuration member 21
+    field_022: ConfigValue22, // stable configuration member 22
+    field_023: ConfigValue23, // stable configuration member 23
+    field_024: ConfigValue24, // stable configuration member 24
+    field_025: ConfigValue25, // stable configuration member 25
+    field_026: ConfigValue26, // stable configuration member 26
+    field_027: ConfigValue27, // stable configuration member 27
+    field_028: ConfigValue28, // stable configuration member 28
+    field_029: ConfigValue29, // stable configuration member 29
+    retry_policy: ExponentialBackoff, // stable configuration member 29
+    field_031: ConfigValue31, // stable configuration member 31
+    field_032: ConfigValue32, // stable configuration member 32
+    field_033: ConfigValue33, // stable configuration member 33
+    field_034: ConfigValue34, // stable configuration member 34
+    field_035: ConfigValue35, // stable configuration member 35
+    field_036: ConfigValue36, // stable configuration member 36
+    field_037: ConfigValue37, // stable configuration member 37
+    field_038: ConfigValue38, // stable configuration member 38
+    field_039: ConfigValue39, // stable configuration member 39
+    field_040: ConfigValue40, // stable configuration member 40
+    field_041: ConfigValue41, // stable configuration member 41
+    field_042: ConfigValue42, // stable configuration member 42
+    field_043: ConfigValue43, // stable configuration member 43
+    field_044: ConfigValue44, // stable configuration member 44
+    field_045: ConfigValue45, // stable configuration member 45
+    field_046: ConfigValue46, // stable configuration member 46
+    field_047: ConfigValue47, // stable configuration member 47
+    field_048: ConfigValue48, // stable configuration member 48
+    field_049: ConfigValue49, // stable configuration member 49
+    field_050: ConfigValue50, // stable configuration member 50
+    field_051: ConfigValue51, // stable configuration member 51
+    field_052: ConfigValue52, // stable configuration member 52
+    field_053: ConfigValue53, // stable configuration member 53
+    field_054: ConfigValue54, // stable configuration member 54
+    field_055: ConfigValue55, // stable configuration member 55
+    field_056: ConfigValue56, // stable configuration member 56
+    field_057: ConfigValue57, // stable configuration member 57
+    field_058: ConfigValue58, // stable configuration member 58
+    field_059: ConfigValue59, // stable configuration member 59
+    field_060: ConfigValue60, // stable configuration member 60
+    field_061: ConfigValue61, // stable configuration member 61
+    field_062: ConfigValue62, // stable configuration member 62
+    field_063: ConfigValue63, // stable configuration member 63
+    field_064: ConfigValue64, // stable configuration member 64
+    field_065: ConfigValue65, // stable configuration member 65
+    field_066: ConfigValue66, // stable configuration member 66
+    field_067: ConfigValue67, // stable configuration member 67
+    field_068: ConfigValue68, // stable configuration member 68
+    field_069: ConfigValue69, // stable configuration member 69
+    field_070: ConfigValue70, // stable configuration member 70
+    field_071: ConfigValue71, // stable configuration member 71
+    field_072: ConfigValue72, // stable configuration member 72
+    field_073: ConfigValue73, // stable configuration member 73
+    field_074: ConfigValue74, // stable configuration member 74
+    field_075: ConfigValue75, // stable configuration member 75
+    field_076: ConfigValue76, // stable configuration member 76
+    field_077: ConfigValue77, // stable configuration member 77
+    field_078: ConfigValue78, // stable configuration member 78
+    field_079: ConfigValue79, // stable configuration member 79
+    field_080: ConfigValue80, // stable configuration member 80
+    field_081: ConfigValue81, // stable configuration member 81
+    field_082: ConfigValue82, // stable configuration member 82
+    field_083: ConfigValue83, // stable configuration member 83
+    field_084: ConfigValue84, // stable configuration member 84
+    field_085: ConfigValue85, // stable configuration member 85
+    field_086: ConfigValue86, // stable configuration member 86
+    field_087: ConfigValue87, // stable configuration member 87
+    field_088: ConfigValue88, // stable configuration member 88
+    field_089: ConfigValue89, // stable configuration member 89
+    field_090: ConfigValue90, // stable configuration member 90
+    field_091: ConfigValue91, // stable configuration member 91
+    field_092: ConfigValue92, // stable configuration member 92
+    field_093: ConfigValue93, // stable configuration member 93
+    field_094: ConfigValue94, // stable configuration member 94
+    field_095: ConfigValue95, // stable configuration member 95
+    field_096: ConfigValue96, // stable configuration member 96
+    field_097: ConfigValue97, // stable configuration member 97
+    field_098: ConfigValue98, // stable configuration member 98
+    field_099: ConfigValue99, // stable configuration member 99
+    field_100: ConfigValue100, // stable configuration member 100
+    field_101: ConfigValue101, // stable configuration member 101
+    field_102: ConfigValue102, // stable configuration member 102
+    field_103: ConfigValue103, // stable configuration member 103
+    field_104: ConfigValue104, // stable configuration member 104
+    field_105: ConfigValue105, // stable configuration member 105
+    field_106: ConfigValue106, // stable configuration member 106
+    field_107: ConfigValue107, // stable configuration member 107
+    field_108: ConfigValue108, // stable configuration member 108
+    field_109: ConfigValue109, // stable configuration member 109
+    field_110: ConfigValue110, // stable configuration member 110
+    field_111: ConfigValue111, // stable configuration member 111
+    field_112: ConfigValue112, // stable configuration member 112
+    field_113: ConfigValue113, // stable configuration member 113
+    field_114: ConfigValue114, // stable configuration member 114
+    field_115: ConfigValue115, // stable configuration member 115
+    field_116: ConfigValue116, // stable configuration member 116
+    field_117: ConfigValue117, // stable configuration member 117
+    field_118: ConfigValue118, // stable configuration member 118
+    field_119: ConfigValue119, // stable configuration member 119
+    field_120: ConfigValue120, // stable configuration member 120
+    pub retry_policy: RetryPolicy,
+}
+
+pub const MAX_IN_FLIGHT: usize = 32;
+pub const MAX_ATTEMPTS: usize = 7;
+pub const BASE_BACKOFF_MS: u64 = 250;
+pub const MAX_BACKOFF_MS: u64 = 30_000;
+
+impl ContextWindow {
+    pub fn retry_policy(&self) -> RetryPolicy {
+        RetryPolicy {
+            max_attempts: MAX_ATTEMPTS,
+            base_delay_ms: BASE_BACKOFF_MS,
+            max_delay_ms: MAX_BACKOFF_MS,
+        }
+    }
+}

@@ -1,0 +1,207 @@
+$ npm run build
+> studio-web@2.4.0 build
+> tsc -p tsconfig.build.json --noEmit && vite build
+vite v6.2.0 building for production...
+transforming...
+[--------------------] 0% transforming modules
+[--------------------] 1% transforming modules
+[--------------------] 1% transforming modules
+[--------------------] 2% transforming modules
+[#-------------------] 3% transforming modules
+[#-------------------] 3% transforming modules
+[#-------------------] 4% transforming modules
+[#-------------------] 5% transforming modules
+[#-------------------] 5% transforming modules
+[#-------------------] 6% transforming modules
+[#-------------------] 6% transforming modules
+[#-------------------] 7% transforming modules
+[##------------------] 8% transforming modules
+[##------------------] 8% transforming modules
+[##------------------] 9% transforming modules
+[##------------------] 10% transforming modules
+[##------------------] 10% transforming modules
+[##------------------] 11% transforming modules
+[##------------------] 11% transforming modules
+[##------------------] 12% transforming modules
+[###-----------------] 13% transforming modules
+[###-----------------] 13% transforming modules
+[###-----------------] 14% transforming modules
+[###-----------------] 15% transforming modules
+[###-----------------] 15% transforming modules
+[###-----------------] 16% transforming modules
+[###-----------------] 16% transforming modules
+[###-----------------] 17% transforming modules
+[####----------------] 18% transforming modules
+[####----------------] 18% transforming modules
+[####----------------] 19% transforming modules
+[####----------------] 20% transforming modules
+[####----------------] 20% transforming modules
+[####----------------] 21% transforming modules
+[####----------------] 21% transforming modules
+[####----------------] 22% transforming modules
+[#####---------------] 23% transforming modules
+[#####---------------] 23% transforming modules
+[#####---------------] 24% transforming modules
+[#####---------------] 25% transforming modules
+[#####---------------] 25% transforming modules
+[#####---------------] 26% transforming modules
+[#####---------------] 26% transforming modules
+[#####---------------] 27% transforming modules
+[######--------------] 28% transforming modules
+[######--------------] 28% transforming modules
+[######--------------] 29% transforming modules
+[######--------------] 30% transforming modules
+[######--------------] 30% transforming modules
+[######--------------] 31% transforming modules
+[######--------------] 31% transforming modules
+[######--------------] 32% transforming modules
+[#######-------------] 33% transforming modules
+[#######-------------] 33% transforming modules
+[#######-------------] 34% transforming modules
+[#######-------------] 35% transforming modules
+[#######-------------] 35% transforming modules
+[#######-------------] 36% transforming modules
+[#######-------------] 36% transforming modules
+[#######-------------] 37% transforming modules
+[########------------] 38% transforming modules
+[########------------] 38% transforming modules
+[########------------] 39% transforming modules
+[########------------] 40% transforming modules
+[########------------] 40% transforming modules
+[########------------] 41% transforming modules
+[########------------] 41% transforming modules
+[########------------] 42% transforming modules
+[#########-----------] 43% transforming modules
+[#########-----------] 43% transforming modules
+[#########-----------] 44% transforming modules
+[#########-----------] 45% transforming modules
+[#########-----------] 45% transforming modules
+[#########-----------] 46% transforming modules
+[#########-----------] 46% transforming modules
+[#########-----------] 47% transforming modules
+[##########----------] 48% transforming modules
+[##########----------] 48% transforming modules
+[##########----------] 49% transforming modules
+[##########----------] 50% transforming modules
+[##########----------] 50% transforming modules
+[##########----------] 51% transforming modules
+[##########----------] 51% transforming modules
+[##########----------] 52% transforming modules
+[###########---------] 53% transforming modules
+[###########---------] 53% transforming modules
+[###########---------] 54% transforming modules
+[###########---------] 55% transforming modules
+[###########---------] 55% transforming modules
+[###########---------] 56% transforming modules
+[###########---------] 56% transforming modules
+[###########---------] 57% transforming modules
+[############--------] 58% transforming modules
+[############--------] 58% transforming modules
+[############--------] 59% transforming modules
+[############--------] 60% transforming modules
+[############--------] 60% transforming modules
+[############--------] 61% transforming modules
+[############--------] 61% transforming modules
+[############--------] 62% transforming modules
+[#############-------] 63% transforming modules
+[#############-------] 63% transforming modules
+[#############-------] 64% transforming modules
+[#############-------] 65% transforming modules
+[#############-------] 65% transforming modules
+[#############-------] 66% transforming modules
+[#############-------] 66% transforming modules
+[#############-------] 67% transforming modules
+[##############------] 68% transforming modules
+[##############------] 68% transforming modules
+[##############------] 69% transforming modules
+[##############------] 70% transforming modules
+[##############------] 70% transforming modules
+[##############------] 71% transforming modules
+[##############------] 71% transforming modules
+[##############------] 72% transforming modules
+[###############-----] 73% transforming modules
+[###############-----] 73% transforming modules
+[###############-----] 74% transforming modules
+[###############-----] 75% transforming modules
+[###############-----] 75% transforming modules
+[###############-----] 76% transforming modules
+[###############-----] 76% transforming modules
+[###############-----] 77% transforming modules
+[################----] 78% transforming modules
+[################----] 78% transforming modules
+[################----] 79% transforming modules
+[################----] 80% transforming modules
+[################----] 80% transforming modules
+[################----] 81% transforming modules
+[################----] 81% transforming modules
+[################----] 82% transforming modules
+[#################---] 83% transforming modules
+[#################---] 83% transforming modules
+[#################---] 84% transforming modules
+[#################---] 85% transforming modules
+[#################---] 85% transforming modules
+[#################---] 86% transforming modules
+[#################---] 86% transforming modules
+[#################---] 87% transforming modules
+[##################--] 88% transforming modules
+[##################--] 88% transforming modules
+[##################--] 89% transforming modules
+[##################--] 90% transforming modules
+[##################--] 90% transforming modules
+[##################--] 91% transforming modules
+[##################--] 91% transforming modules
+[##################--] 92% transforming modules
+[###################-] 93% transforming modules
+[###################-] 93% transforming modules
+[###################-] 94% transforming modules
+[###################-] 95% transforming modules
+[###################-] 95% transforming modules
+[###################-] 96% transforming modules
+[###################-] 96% transforming modules
+[###################-] 97% transforming modules
+[####################] 98% transforming modules
+[####################] 98% transforming modules
+[####################] 99% transforming modules
+[####################] 99% transforming modules
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+Waiting for TypeScript to report diagnostics...
+src/server/session.ts(42,17): error TS2322: Type 'string' is not assignable to type 'SessionUser'.
+src/routes/auth.ts(19,3): error TS2345: Argument of type 'undefined' is not assignable to parameter of type 'string'.
+src/utils/format.ts(6,11): warning TS6133: 'unused' is declared but its value is never read.
+
+Build failed with 2 errors.
+exit code: 1

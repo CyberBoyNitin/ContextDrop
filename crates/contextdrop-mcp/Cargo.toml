@@ -1,0 +1,25 @@
+[package]
+name = "contextdrop-mcp"
+description = "Local stdio Model Context Protocol server for ContextDrop"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "contextdrop-mcp"
+path = "src/main.rs"
+
+[dependencies]
+contextdrop-core.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints]
+workspace = true

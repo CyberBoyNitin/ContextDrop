@@ -1,0 +1,90 @@
+name: Bug report
+description: Report a reproducible defect in the CLI, engine, server, or dashboard.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. **Do not include real secrets, customer data, or production logs.** Use a synthetic or redacted minimal reproduction.
+
+        For security vulnerabilities, stop here and follow [SECURITY.md](../../SECURITY.md) or the repository's private security advisory workflow instead.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What went wrong, and what did you expect?
+      placeholder: A concise description of the defect.
+    validations:
+      required: true
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options:
+        - CLI
+        - Core compression engine
+        - Local server / API
+        - Dashboard
+        - Documentation
+        - Build or CI
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Output of `contextdrop --version` or the commit/run identifier.
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Rust version, Node version, browser, and build profile as applicable.
+      placeholder: "Windows 11, Rust 1.98, Node 24, Edge, debug build"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide exact commands or UI actions. Include a minimal synthetic input if relevant.
+      placeholder: |
+        1. Run `contextdrop compress fixture.log --strategy balanced`
+        2. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened, and why?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include the sanitized error, JSON fields, warnings, and exit code. Screenshots are welcome for UI issues.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: preservation
+    attributes:
+      label: Evidence preservation impact
+      description: Did the output omit or corrupt protected diagnostic evidence? If so, what text was lost?
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched existing issues and did not find a duplicate.
+          required: true
+        - label: This report contains no secrets, personal data, or confidential logs.
+          required: true
+        - label: This is not a security vulnerability (those go through the private channel).
+          required: true

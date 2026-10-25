@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "fixtures": [
+    {
+      "id": "rust-build-failure",
+      "name": "Rust compiler failure",
+      "description": "Cargo build with repeated file-lock waits, compiler diagnostics, source excerpt, and exit code.",
+      "file": "rust-build-failure.log",
+      "category": "Build failure",
+      "format": "build-log",
+      "must_preserve": [
+        "error[E0308]: mismatched types",
+        "crates/contextdrop-cli/src/main.rs:14:37",
+        "expected `String`, found `&str`",
+        "error: could not compile `contextdrop-cli`",
+        "exit code: 101",
+        "warning: unused variable: `retries`"
+      ],
+      "notes": "Synthetic Cargo output. Repeated lock waits are compressible; all diagnostics and source-location evidence are protected."
+    },
+    {
+      "id": "typescript-build-failure",
+      "name": "TypeScript build failure",
+      "description": "Vite/TypeScript build with 160 progress updates and two type errors with source locations.",
+      "file": "typescript-build-failure.log",
+      "category": "Build failure",
+      "format": "build-log",
+      "must_preserve": [
+        "src/server/session.ts(42,17): error TS2322",
+        "src/routes/auth.ts(19,3): error TS2345",
+        "warning TS6133",
+        "Build failed with 2 errors",
+        "exit code: 1"
+      ],
+      "notes": "Progress updates are safe to omit under balanced/aggressive rules; all errors, warnings, and the final failure summary are protected."
+    },
+    {
+      "id": "jest-test-failure",
+      "name": "Jest suite with one failure",
+      "description": "A 144-test Jest run with 143 passing tests, a failed assertion, code frame, and summary.",
+      "file": "jest-test-failure.log",
+      "category": "Test failure",
+      "format": "test-output",
+      "must_preserve": [
+        "CacheService › expires stale entries",
+        "Expected: true",
+        "Received: false",
+        "tests/unit/cache.test.ts:28:17",
+        "1 failed, 143 passed, 144 total"
+      ],
+      "notes": "Passing entries are compressible; the failing test, assertion values, source location, and totals are protected."
+    },
+    {
+      "id": "pytest-traceback",
+      "name": "Pytest failure and traceback",
+      "description": "Pytest verbose output with 120 passing tests, a failing assertion, code frame, and traceback location.",
+      "file": "pytest-traceback.log",
+      "category": "Test failure",
+      "format": "test-output",
+      "must_preserve": [
+        "FAILED tests/test_parser.py::test_rejects_empty_input",
+        "AssertionError: expected ValueError, got None",
+        "tests/test_parser.py:88: AssertionError",
+        "result = parse(\"\")",
+        "1 failed, 120 passed, 4 warnings"
+      ],
+      "notes": "The passing-test block is compressed; the failing test, assertion detail, traceback location, and summary remain."
+    },
+    {
+      "id": "npm-install-progress",
+      "name": "npm install progress",
+      "description": "Dependency installation with 240 progress bars, deprecation warnings, and vulnerability findings.",
+      "file": "npm-install-progress.log",
+      "category": "Dependencies",
+      "format": "build-log",
+      "must_preserve": [
+        "npm WARN deprecated inflight@1.0.6",
+        "npm WARN EBADENGINE Unsupported engine",
+        "added 128 packages",
+        "found 3 vulnerabilities"
+      ],
+      "notes": "Progress bars are collapsed while warnings and security findings are protected. This intentionally retains most warning bulk."
+    },
+    {
+      "id": "structured-http-log",
+      "name": "Structured HTTP access log",
+      "description": "320 structured request logs around one 500 response and handler stack location.",
+      "file": "structured-http.log",
+      "category": "Structured logs",
+      "format": "structured-log",
+      "must_preserve": [
+        "path=/api/orders",
+        "status=500",
+        "upstream payment service unavailable",
+        "src/routes/orders.ts:88:11"
+      ],
+      "notes": "Balanced mode has few exact duplicates because IDs differ. Aggressive normalized grouping is expected to compress repeated health-check templates."
+    },
+    {
+      "id": "json-duplicate-records",
+      "name": "Large JSON duplicate array",
+      "description": "A 263-record JSON array with 260 exact duplicate healthy records and three protected error records.",
+      "file": "large-json-array.json",
+      "category": "Structured JSON",
+      "format": "json",
+      "must_preserve": [
+        "payment capture failed",
+        "PAYMENT_DECLINED",
+        "trace-9f3a2b",
+        "inventory reservation expired",
+        "upstream settlement timeout"
+      ],
+      "notes": "Balanced structural deduplication is expected to reduce this input substantially while retaining every protected error record."
+    },
+    {
+      "id": "security-scan",
+      "name": "Security scan findings",
+      "description": "A scanner report with critical vulnerabilities, credential exposure, injection findings, and repeated worker noise.",
+      "file": "security-scan.log",
+      "category": "Security evidence",
+      "format": "plain-text",
+      "must_preserve": [
+        "CVE-2026-21894",
+        "src/auth/session.rs:77",
+        "hard-coded credential",
+        "authentication failed",
+        "Security scan complete: 3 critical, 5 high, 4 medium"
+      ],
+      "notes": "Most semantic content is protected evidence, intentionally limiting compression. The repeated scanner waits are compressible."
+    },
+    {
+      "id": "rust-panic",
+      "name": "Rust panic and backtrace",
+      "description": "A panicking importer with repeated wait output, panic message, and source-mapped backtrace frames.",
+      "file": "rust-panic.log",
+      "category": "Runtime failure",
+      "format": "terminal",
+      "must_preserve": [
+        "thread 'main' panicked",
+        "crates/importer/src/main.rs:42:9",
+        "ConnectionRefused",
+        "0: std::panicking::begin_panic_handler",
+        "RUST_BACKTRACE=full"
+      ],
+      "notes": "Repeated wait lines compress; panic text, error value, and backtrace frame locations are protected or adjacent to protected evidence."
+    },
+    {
+      "id": "dense-source-control",
+      "name": "Dense source text control",
+      "description": "A dense, unique source-like file used to verify that ContextDrop does not invent savings.",
+      "file": "dense-source.txt",
+      "category": "Control",
+      "format": "plain-text",
+      "must_preserve": [
+        "retry_policy: ExponentialBackoff",
+        "MAX_IN_FLIGHT: usize = 32"
+      ],
+      "notes": "Expected to return the original unchanged under all strategies. Useful as a no-false-savings control."
+    },
+    {
+      "id": "go-test-failure",
+      "name": "Go test failure",
+      "description": "A Go test run with 120 passing package summaries and one failing test with a source line.",
+      "file": "go-test-failure.log",
+      "category": "Test failure",
+      "format": "test-output",
+      "must_preserve": [
+        "TestCacheEvict",
+        "cache_test.go:88",
+        "expected 2 entries, got 3",
+        "exit status 1",
+        "FAIL    example.com/ctxdrop/cache"
+      ],
+      "notes": "Passing package lines are compressible. The failed test, source line, exit status, and failed package summary are protected."
+    },
+    {
+      "id": "multilingual-errors",
+      "name": "Multilingual errors",
+      "description": "Chinese and Japanese diagnostics surrounded by repeated Chinese progress text.",
+      "file": "multilingual-errors.log",
+      "category": "Unicode robustness",
+      "format": "plain-text",
+      "must_preserve": [
+        "错误: 数据库连接失败",
+        "エラー: 設定ファイルが見つかりません",
+        "构建总结: 1 个错误, 2 个警告",
+        "重试次数超过上限",
+        "exit code: 1"
+      ],
+      "notes": "Progress-like repeated Chinese text is compressible; non-English error markers are protected by the multilingual rules."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+name: Feature request
+description: Propose a capability, integration, format, or usability improvement.
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ContextDrop deliberately favors evidence preservation and deterministic behavior over maximum compression. Explain the concrete workflow and any safety trade-offs.
+
+        Do not include real secrets or customer data.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or workflow
+      description: What are you trying to accomplish? What fails or is unnecessarily difficult today?
+      placeholder: Describe the real workflow, not only the proposed UI or API.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: What should ContextDrop do? Include commands, API shape, or UI states if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and determinism impact
+      description: What diagnostic evidence must survive? Would this introduce non-deterministic, model-based, network, or persistence behavior?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Existing tools, scripts, or workarounds you tried.
+    validations:
+      required: false
+  - type: dropdown
+    id: component
+    attributes:
+      label: Area
+      options:
+        - CLI
+        - Core compression engine
+        - Protection rules
+        - Local server / API
+        - Dashboard
+        - Documentation
+        - Integrations and packaging
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched existing issues and discussions for similar requests.
+          required: true
+        - label: This request does not depend on collecting telemetry or sending input to a remote service.
+          required: true
+        - label: I understand that claims of semantic equivalence or guaranteed savings will not be accepted without evidence.
+          required: true

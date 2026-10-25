@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ContextDrop">
+  <rect width="64" height="64" rx="4" fill="#1b1c17"/>
+  <rect x="48" y="48" width="16" height="16" fill="#c94720"/>
+  <text x="10" y="45" fill="#f2efe6" font-family="Georgia, 'Times New Roman', serif" font-size="43" font-style="italic">C</text>
+</svg>
