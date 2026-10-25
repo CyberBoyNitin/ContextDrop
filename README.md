@@ -49,7 +49,38 @@ ContextDrop is built around three constraints:
 
 Protection is independent of strategy. A protected line and its adjacent context are never eligible for omission. JSON structural deduplication inserts a `$contextdrop` marker and emits a schema-change warning; do not use it where exact JSON shape is required.
 
-## Quick start
+## Install
+
+### One-line install (recommended)
+
+Windows PowerShell:
+
+```powershell
+irm https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.ps1 | iex
+```
+
+macOS or Linux:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.sh | bash
+```
+
+The installer downloads the release for your platform, verifies its SHA-256 checksum, installs the `contextdrop` CLI and `contextdrop-mcp` server into a user-local directory, and registers the MCP server with each supported client it detects:
+
+- OpenCode
+- Claude Code
+- Claude Desktop
+- Cursor
+
+Restart the client, then ask it to compress a log. For example:
+
+> Use contextdrop's `compress_context_file` tool on `C:\logs\build.log`, then explain the failure.
+
+No Rust or Node installation is required. To skip client registration, pin a version, choose an install directory, or configure only one client, see [Install options](docs/INSTALL.md). Release assets and `.sha256` files are also on the [Releases](https://github.com/CyberBoyNitin/ContextDrop/releases) page.
+
+The dashboard is not included in the release archives yet; build it from source with the steps below.
+
+## Build from source
 
 ### Requirements
 
@@ -68,6 +99,10 @@ cargo build --release --workspace
 On Unix, use `./target/release/contextdrop`; on Windows, use `target\release\contextdrop.exe`. The commands below use the Unix path.
 
 ### Connect an MCP agent
+
+If you used the one-line installer above, the server is already registered and
+you can skip this section. The steps here are for source builds and manual
+setups.
 
 The workspace builds `contextdrop-mcp`, a local stdio MCP server with no
 network listener and no command-execution tool:
@@ -264,8 +299,8 @@ web/
   src/                    React + TypeScript + Vite + Tailwind dashboard
   public/                 Static assets
 fixtures/                 Twelve deterministic fixtures and manifest
-scripts/                  Fixture generator
-docs/                     Architecture, threat model, privacy, methodology, MCP, comparison
+scripts/                  Fixture generator and one-line installers
+docs/                     Architecture, install, threat model, privacy, methodology, MCP, comparison
 ```
 
 Architecture and data flow: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). MCP client setup:

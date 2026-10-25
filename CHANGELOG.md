@@ -24,6 +24,9 @@ First public pre-1.0 release.
 - Unit, property-based, CLI integration, server, MCP protocol, and fixture-evidence tests.
 - Benchmark methodology with exact token and byte results for the included corpus.
 - Apache-2.0 license, security policy, contributor guide, code of conduct, threat model, privacy documentation, architecture documentation, competitive analysis, issue forms, pull-request template, Dependabot configuration, and CI.
+- One-line installers for Windows and macOS/Linux that download the platform release, verify its SHA-256 checksum, install the CLI and MCP server, and register the MCP server with detected OpenCode, Claude Code, Claude Desktop, and Cursor clients.
+- Tag-triggered release workflow publishing Windows x64, Linux x64/arm64, and macOS arm64/x64 archives with per-asset checksums and a combined `SHA256SUMS` file.
+- Installation guide covering one-line install, pinned versions, manual checksum verification, supported clients, updates, uninstall, and troubleshooting.
 
 ### Verified in the 0.1.0 baseline
 

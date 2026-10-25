@@ -9,6 +9,28 @@ This is a tool server, not a transparent proxy. The agent (or the person using
 it) decides when to call ContextDrop. ContextDrop does not intercept model
 traffic, wrap an agent process, or read files that were not passed to it.
 
+## Install with one command
+
+Windows PowerShell:
+
+```powershell
+irm https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.ps1 | iex
+```
+
+macOS or Linux:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.sh | bash
+```
+
+The installer verifies the release checksum, installs `contextdrop-mcp`, and
+registers it with OpenCode, Claude Code, Claude Desktop, and Cursor when found.
+Restart the client afterwards. Installer options, manual downloads, and
+troubleshooting are in [INSTALL.md](INSTALL.md).
+
+The rest of this document covers building from a checkout and manual per-client
+setup.
+
 ## Build
 
 ```bash
