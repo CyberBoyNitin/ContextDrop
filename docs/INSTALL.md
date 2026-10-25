@@ -16,7 +16,7 @@ clients they detect. Rust and Node are not required.
 In PowerShell:
 
 ```powershell
-irm https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.ps1 | iex
+irm https://github.com/CyberBoyNitin/ContextDrop/releases/latest/download/install.ps1 | iex
 ```
 
 This installs to `%LOCALAPPDATA%\ContextDrop\bin` and adds that directory to
@@ -25,7 +25,7 @@ your user `PATH`.
 ### macOS and Linux
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.sh | bash
+curl -fsSL https://github.com/CyberBoyNitin/ContextDrop/releases/latest/download/install.sh | bash
 ```
 
 This installs to `~/.local/bin`. If that directory is not on your `PATH`, the
@@ -60,14 +60,14 @@ Download the script first if you need flags.
 
 ```powershell
 $script = Join-Path $env:TEMP install-contextdrop.ps1
-irm https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.ps1 -OutFile $script
+irm https://github.com/CyberBoyNitin/ContextDrop/releases/download/v0.1.0/install.ps1 -OutFile $script
 & $script -Client none -Version v0.1.0 -InstallDir "$env:LOCALAPPDATA\ContextDrop\bin"
 ```
 
 Or pass options in one line by running the downloaded script in a child scope:
 
 ```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.ps1))) -Client none
+& ([scriptblock]::Create((irm https://github.com/CyberBoyNitin/ContextDrop/releases/latest/download/install.ps1))) -Client none
 ```
 
 | Option | Default | Purpose |
@@ -82,7 +82,7 @@ Or pass options in one line by running the downloaded script in a child scope:
 ### Bash
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.sh \
+curl -fsSL https://github.com/CyberBoyNitin/ContextDrop/releases/download/v0.1.0/install.sh \
   | bash -s -- --client none --version v0.1.0
 ```
 
@@ -97,6 +97,10 @@ curl -fsSL https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scri
 Use `-Client`/`--client` to choose one client, `all` to configure every supported
 client, or `none` to install only the binaries. With `auto` (the default), only
 clients that appear to be installed are configured.
+
+The one-line commands always use the latest installer. To run the installer that
+shipped with a specific release, replace `latest/download` with `download/v0.1.0`
+in the URL.
 
 ## Manual install
 
@@ -152,7 +156,7 @@ To pin a version, pass `-Version v0.1.0` or `--version v0.1.0`.
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-irm https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.ps1 | iex
+irm https://github.com/CyberBoyNitin/ContextDrop/releases/latest/download/install.ps1 | iex
 ```
 
 **The download fails.** No release may be published yet, or GitHub may be

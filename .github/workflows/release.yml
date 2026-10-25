@@ -92,10 +92,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
           merge-multiple: true
+
+      - name: Include installer scripts
+        run: |
+          set -euo pipefail
+          cp scripts/install.ps1 scripts/install.sh artifacts/
 
       - name: Build combined checksum file
         run: |

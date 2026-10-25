@@ -28,7 +28,7 @@
     Print the plan without downloading or changing anything.
 
 .EXAMPLE
-    irm https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.ps1 | iex
+    irm https://github.com/CyberBoyNitin/ContextDrop/releases/latest/download/install.ps1 | iex
 
 .EXAMPLE
     .\install.ps1 -Client none -Version v0.1.0

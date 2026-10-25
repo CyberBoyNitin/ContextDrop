@@ -14,13 +14,13 @@ traffic, wrap an agent process, or read files that were not passed to it.
 Windows PowerShell:
 
 ```powershell
-irm https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.ps1 | iex
+irm https://github.com/CyberBoyNitin/ContextDrop/releases/latest/download/install.ps1 | iex
 ```
 
 macOS or Linux:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.sh | bash
+curl -fsSL https://github.com/CyberBoyNitin/ContextDrop/releases/latest/download/install.sh | bash
 ```
 
 The installer verifies the release checksum, installs `contextdrop-mcp`, and

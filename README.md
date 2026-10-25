@@ -56,13 +56,13 @@ Protection is independent of strategy. A protected line and its adjacent context
 Windows PowerShell:
 
 ```powershell
-irm https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.ps1 | iex
+irm https://github.com/CyberBoyNitin/ContextDrop/releases/latest/download/install.ps1 | iex
 ```
 
 macOS or Linux:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.sh | bash
+curl -fsSL https://github.com/CyberBoyNitin/ContextDrop/releases/latest/download/install.sh | bash
 ```
 
 The installer downloads the release for your platform, verifies its SHA-256 checksum, installs the `contextdrop` CLI and `contextdrop-mcp` server into a user-local directory, and registers the MCP server with each supported client it detects:

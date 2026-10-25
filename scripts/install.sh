@@ -31,7 +31,7 @@ Options:
   -h, --help         Show this help
 
 Examples:
-  curl -fsSL https://raw.githubusercontent.com/CyberBoyNitin/ContextDrop/main/scripts/install.sh | bash
+  curl -fsSL https://github.com/CyberBoyNitin/ContextDrop/releases/latest/download/install.sh | bash
   curl -fsSL .../install.sh | bash -s -- --client none
   ./install.sh --client opencode --version v0.1.0
 EOF
