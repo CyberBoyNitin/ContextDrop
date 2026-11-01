@@ -34,7 +34,7 @@ tokio = { version = "1.46", features = ["macros", "rt-multi-thread", "net", "sig
 axum = "0.8"
 tower = { version = "0.5", features = ["limit", "util"] }
 tower-http = { version = "0.6", features = ["fs"] }
-similar = "2.7"
+similar = "3.2"
 assert_cmd = "2.0"
 predicates = "3.1"
 tempfile = "3.20"
